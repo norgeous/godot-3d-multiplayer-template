@@ -63,6 +63,7 @@ jobs:
         run: |
           ls -l build
           ls -l build/linux
+          ls -l build/windows
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
