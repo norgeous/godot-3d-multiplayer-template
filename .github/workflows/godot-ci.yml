@@ -72,7 +72,7 @@ jobs:
           draft: true
           prerelease: true
           tag: "${{ github.ref_type }}: ${{ github.ref_name }}"
-          body: testing releases
+          body: testing releases, hash ${{ github.sha }}
           # bodyFile: "body.md"
 
   # export-web:
