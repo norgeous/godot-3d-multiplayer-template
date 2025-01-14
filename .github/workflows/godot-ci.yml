@@ -60,6 +60,10 @@ jobs:
         with:
           name: linux
           path: build/linux
+      - name: debug
+        run: |
+          ls -l $EXPORT_DIR
+          ls -l $EXPORT_DIR/linux
 
   # export-web:
   #   name: Web Export
