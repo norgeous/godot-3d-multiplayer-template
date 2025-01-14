@@ -44,9 +44,9 @@ jobs:
       - name: Calculate semver version
         id: calculate-version
         uses: bitshifted/git-auto-semver@v1
-        with:
-          main_branch: ${{ github.ref_name }}
-          create_tag: false
+        # with:
+          # main_branch: ${{ github.ref_name }} # calculate against current branch
+          # create_tag: false
           # tag_prefix: 'tags'
       - name: Use version
         run: |
