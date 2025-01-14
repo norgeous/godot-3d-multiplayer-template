@@ -62,12 +62,12 @@ jobs:
       - name: debug
         run: |
           ls -l build
-          ls -l build/linux
           ls -l build/windows
+          ls -l build/linux
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/linux/*,build/windows/*"
+          artifacts: "build/windows/*,build/linux/*"
           # bodyFile: "body.md"
           draft: true
           tag: ${{ github.ref_type }}:${{ github.ref_name }}
