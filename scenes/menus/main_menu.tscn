@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://ffncciksi1tw"]
 
-[ext_resource type="Texture2D" uid="uid://c8egr8gfrmslx" path="res://asssets/ui/menu-bg.jpeg" id="1_va0jy"]
-[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_wcff0"]
-[ext_resource type="Theme" uid="uid://e1no5yb08xdc" path="res://asssets/ui/menu_theme.tres" id="2_b784e"]
-[ext_resource type="Script" path="res://scripts/menu.gd" id="3_ewi18"]
+[ext_resource type="Script" path="res://scripts/menus/main_menu.gd" id="1_l7uga"]
+[ext_resource type="Texture2D" uid="uid://c8egr8gfrmslx" path="res://asssets/ui/menu-bg.jpeg" id="2_hugc6"]
+[ext_resource type="Script" path="res://scripts/menus/menu.gd" id="3_jtdmb"]
+[ext_resource type="Theme" uid="uid://e1no5yb08xdc" path="res://asssets/ui/menu_theme.tres" id="4_idst6"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -12,7 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_wcff0")
+script = ExtResource("1_l7uga")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -29,7 +29,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_va0jy")
+texture = ExtResource("2_hugc6")
 expand_mode = 2
 
 [node name="Menu" type="Panel" parent="."]
@@ -42,7 +42,7 @@ offset_top = 1.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_ewi18")
+script = ExtResource("3_jtdmb")
 
 [node name="Exit" type="Button" parent="Menu"]
 layout_mode = 1
@@ -54,7 +54,7 @@ offset_top = 52.0
 offset_right = -39.0
 offset_bottom = 103.0
 grow_horizontal = 0
-theme = ExtResource("2_b784e")
+theme = ExtResource("4_idst6")
 theme_override_font_sizes/font_size = 48
 text = "Exit"
 flat = true
@@ -66,7 +66,7 @@ offset_left = 59.0
 offset_top = 51.0
 offset_right = 312.0
 offset_bottom = 102.0
-theme = ExtResource("2_b784e")
+theme = ExtResource("4_idst6")
 text = "Host Game"
 flat = true
 
@@ -76,7 +76,7 @@ offset_left = 59.0
 offset_top = 106.0
 offset_right = 312.0
 offset_bottom = 157.0
-theme = ExtResource("2_b784e")
+theme = ExtResource("4_idst6")
 text = "Join Game"
 flat = true
 
