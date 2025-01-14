@@ -60,5 +60,5 @@ jobs:
           prerelease: ${{ github.ref_name != 'master'}}
           tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
           body: ${{ github.sha }}
-          # generateReleaseNotes: true
+          generateReleaseNotes: true
           # bodyFile: "body.md"
