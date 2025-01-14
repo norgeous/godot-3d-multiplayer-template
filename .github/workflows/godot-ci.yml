@@ -29,41 +29,18 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: windows
-      #     path: build/windows
-  # export-linux:
-  #   name: Linux Export
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: barichello/godot-ci:4.3
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #       with:
-  #         lfs: true
-  #     - name: Setup
-  #       run: |
-  #         mkdir -v -p ~/.local/share/godot/export_templates/
-  #         mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Linux Build
         run: |
           mkdir -v -p build/linux
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: linux
-      #     path: build/linux
-      - name: debug
+      - name: Linux Dedicated Server Build
         run: |
-          ls -l build
-          ls -l build/windows
-          ls -l build/linux
+          mkdir -v -p build/linux-server
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Linux-ds" "$EXPORT_DIR/linux-server/$EXPORT_NAME-dedicated-server.x86_64"
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -74,63 +51,3 @@ jobs:
           tag: "v0.0.0-${{ github.ref_name }}"
           body: ${{ github.sha }}
           # bodyFile: "body.md"
-
-  # export-web:
-  #   name: Web Export
-  #   runs-on: ubuntu-20.04
-  #   container:
-  #     image: barichello/godot-ci:4.3
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #       with:
-  #         lfs: true
-  #     - name: Setup
-  #       run: |
-  #         mkdir -v -p ~/.local/share/godot/export_templates/
-  #         mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-  #     - name: Web Build
-  #       run: |
-  #         mkdir -v -p build/web
-  #         EXPORT_DIR="$(readlink -f build)"
-  #         cd $PROJECT_PATH
-  #         godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: web
-  #         path: build/web
-  #     - name: Install rsync 📚
-  #       run: |
-  #         apt-get update && apt-get install -y rsync
-  #     - name: Deploy to GitHub Pages 🚀
-  #       uses: JamesIves/github-pages-deploy-action@releases/v4
-  #       with:
-  #         branch: gh-pages # The branch the action should deploy to.
-  #         folder: build/web # The folder the action should deploy.
-
-  # export-mac:
-  #   name: Mac Export
-  #   runs-on: ubuntu-20.04
-  #   container:
-  #     image: barichello/godot-ci:4.3
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #       with:
-  #         lfs: true
-  #     - name: Setup
-  #       run: |
-  #         mkdir -v -p ~/.local/share/godot/export_templates/
-  #         mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-  #     - name: Mac Build
-  #       run: |
-  #         mkdir -v -p build/mac
-  #         EXPORT_DIR="$(readlink -f build)"
-  #         cd $PROJECT_PATH
-  #         godot --headless --verbose --export-release "macOS" "$EXPORT_DIR/mac/$EXPORT_NAME.zip"
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: mac
-  #         path: build/mac
