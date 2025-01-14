@@ -64,13 +64,20 @@ jobs:
         run: |
           ls -l build
           ls -l build/linux
-      - name: Create a Release
-        uses: elgohr/Github-Release-Action@v5
+      - name: Create Release
+        id: create_release
+        uses: comnoco/create-release@v2
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          title: MyReleaseMessage Test
-          workdir: build
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: true
+          prerelease: true
 
   # export-web:
   #   name: Web Export
