@@ -67,11 +67,13 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
+          allowUpdates: true
           artifacts: "build/windows/*,build/linux/*"
-          # bodyFile: "body.md"
           draft: true
+          prerelease: true
           tag: "${{ github.ref_type }}: ${{ github.ref_name }}"
           body: testing releases
+          # bodyFile: "body.md"
 
   # export-web:
   #   name: Web Export
