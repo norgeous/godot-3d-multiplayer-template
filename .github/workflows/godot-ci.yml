@@ -70,6 +70,7 @@ jobs:
           artifacts: "build/*"
           # bodyFile: "body.md"
           draft: true
+          tag: ${{ github.ref }}
 
   # export-web:
   #   name: Web Export
