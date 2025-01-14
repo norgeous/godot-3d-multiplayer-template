@@ -71,8 +71,8 @@ jobs:
           artifacts: "build/windows/*,build/linux/*"
           draft: true
           prerelease: true
-          tag: "${{ github.ref_type }}: ${{ github.ref_name }}"
-          body: testing releases, hash ${{ github.sha }}
+          tag: "v0.0.0-${{ github.ref_name }}"
+          body: ${{ github.sha }}
           # bodyFile: "body.md"
 
   # export-web:
