@@ -45,7 +45,8 @@ jobs:
         id: calculate-version
         uses: bitshifted/git-auto-semver@v1
       - name: Use version
-        run: echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
+        run: |
+          echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
