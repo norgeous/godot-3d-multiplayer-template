@@ -70,7 +70,7 @@ jobs:
           artifacts: "build/windows/*,build/linux/*"
           # bodyFile: "body.md"
           draft: true
-          tag: ${{ github.ref_type }}:${{ github.ref_name }}
+          tag: "${{ github.ref_type }}: ${{ github.ref_name }}"
           body: testing releases
 
   # export-web:
