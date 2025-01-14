@@ -47,7 +47,7 @@ jobs:
         with:
           main_branch: master
           # main_branch: ${{ github.ref_name }} # calculate against current branch
-          # create_tag: false
+          create_tag: true
           # tag_prefix: 'tags'
       - name: Use version
         run: |
