@@ -66,10 +66,10 @@ jobs:
           ls -l build/linux
       - name: Create Release
         uses: ncipollo/release-action@v1
-          with:
-            artifacts: "build/*"
-            # bodyFile: "body.md"
-            draft: true
+        with:
+          artifacts: "build/*"
+          # bodyFile: "body.md"
+          draft: true
 
   # export-web:
   #   name: Web Export
