@@ -45,7 +45,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: "build/windows/*,build/linux/*"
+          artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
           draft: true
           prerelease: true
           tag: "v0.0.0-${{ github.ref_name }}"
