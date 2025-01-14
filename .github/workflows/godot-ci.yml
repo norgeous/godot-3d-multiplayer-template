@@ -50,4 +50,5 @@ jobs:
           prerelease: true
           tag: "v0.0.0-${{ github.ref_name }}"
           body: ${{ github.sha }}
+          generateReleaseNotes: true
           # bodyFile: "body.md"
