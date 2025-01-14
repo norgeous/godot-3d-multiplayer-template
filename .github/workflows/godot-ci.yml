@@ -41,7 +41,7 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Linux-ds" "$EXPORT_DIR/linux-server/$EXPORT_NAME-dedicated-server.x86_64"
-      - name: calculate version
+      - name: Calculate semver version
         id: calculate-version
         uses: bitshifted/git-auto-semver@v1
         with:
@@ -57,7 +57,7 @@ jobs:
           allowUpdates: true
           artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
           # draft: true
-          prerelease: true
+          prerelease: ${{ github.ref_name != 'main'}}
           tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
           body: ${{ github.sha }}
           # generateReleaseNotes: true
