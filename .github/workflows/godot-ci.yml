@@ -65,19 +65,11 @@ jobs:
           ls -l build
           ls -l build/linux
       - name: Create Release
-        id: create_release
-        uses: comnoco/create-release-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: true
-          prerelease: true
+        uses: ncipollo/release-action@v1
+          with:
+            artifacts: "build/*"
+            # bodyFile: "body.md"
+            draft: true
 
   # export-web:
   #   name: Web Export
