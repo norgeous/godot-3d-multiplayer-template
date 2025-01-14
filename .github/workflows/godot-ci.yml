@@ -62,8 +62,8 @@ jobs:
           path: build/linux
       - name: debug
         run: |
-          ls -l $EXPORT_DIR
-          ls -l $EXPORT_DIR/linux
+          ls -l build
+          ls -l build/linux
 
   # export-web:
   #   name: Web Export
