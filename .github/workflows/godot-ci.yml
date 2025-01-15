@@ -57,12 +57,8 @@ jobs:
         with:
           allowUpdates: true
           artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
-          # draft: true
-          # tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
-          # tag: ${{ steps.semver.outputs.next }}
           prerelease: ${{ github.ref_name != 'master'}}
           makeLatest: ${{ github.ref_name == 'master'}}
-          # tag: ${{ github.ref_name == 'master' && steps.semver.outputs.next || "${{ steps.semver.outputs.next }}-${{ github.ref_name }}" }}
           tag: "${{ steps.semver.outputs.next }}${{ github.ref_name != 'master' && '-' }}${{ github.ref_name != 'master' && github.ref_name }}"
           body: "For: ${{ github.sha }}"
           generateReleaseNotes: true
