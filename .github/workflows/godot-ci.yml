@@ -30,7 +30,7 @@ jobs:
           echo "The next tag version will be: ${{ steps.semver.outputs.next }}"
       - name: Insert version to Godot project file
         run: |
-          sed -i 's/v0.0.0/${{ steps.semver.outputs.next }}${{ github.ref_name != 'master' && '-' }}${{ github.ref_name != 'master' && github.ref_name }}/' project.godot
+          sed -i 's/v0.0.0/${{ steps.semver.outputs.next }}${{ github.ref_name != 'master' && '-' || ''}}${{ github.ref_name != 'master' && github.ref_name || '' }}/' project.godot
       - name: Setup Godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -62,7 +62,7 @@ jobs:
           artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
           prerelease: ${{ github.ref_name != 'master'}}
           makeLatest: ${{ github.ref_name == 'master'}}
-          tag: "${{ steps.semver.outputs.next }}${{ github.ref_name != 'master' && '-' }}${{ github.ref_name != 'master' && github.ref_name }}"
+          tag: "${{ steps.semver.outputs.next }}${{ github.ref_name != 'master' && '-' || '' }}${{ github.ref_name != 'master' && github.ref_name || '' }}"
           body: "For: ${{ github.sha }}"
           generateReleaseNotes: true
           # bodyFile: "body.md"
