@@ -8,7 +8,7 @@ func create_server_peer():
 	enet_network_peer.create_server(SERVER_PORT)
 	multiplayer.multiplayer_peer = enet_network_peer
 	
-func create_client_peer():
+func create_client_peer(serverAddress):
 	var enet_network_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-	enet_network_peer.create_client(SERVER_IP, SERVER_PORT)
+	enet_network_peer.create_client(serverAddress[0], int(serverAddress[1]))
 	multiplayer.multiplayer_peer = enet_network_peer

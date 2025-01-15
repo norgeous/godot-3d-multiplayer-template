@@ -15,13 +15,13 @@ func host_game():
 	add_child(active_network)
 	active_network.create_server_peer()
 
-func join_game():
+func join_game(serverAddress):
 	print("Join game")
 	show_loading()
 
 	var active_network = _enet_network.instantiate()
 	add_child(active_network)
-	active_network.create_client_peer()
+	active_network.create_client_peer(serverAddress)
 	
 func show_loading():
 	print("Show loading")

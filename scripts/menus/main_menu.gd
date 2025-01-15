@@ -17,7 +17,7 @@ func host_game():
 	
 func join_game():
 	print("Join game pressed")
-	NetworkManager.join_game()
+	NetworkManager.join_game($"Menu/HBoxContainer/ServerAddress".text.strip_edges().split(':'))
 	get_tree().call_deferred(&"change_scene_to_packed", preload(GAME_SCENE))
 	
 func exit_game():
