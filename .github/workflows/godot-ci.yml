@@ -18,31 +18,16 @@ jobs:
         with:
           lfs: true
           fetch-depth: '0'
-
-      # - name: Minor version for each merge
-      #   id: taggerDryRun
-      #   uses: anothrNick/github-tag-action@1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     WITH_V: true
-      #     DRY_RUN: true
-      # - name: echo tags
-      #   run: |
-      #     echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
-      #     echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
-      #     echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
-
-      - name: Get Next Version
+      - name: Determine next version number
         id: semver
         uses: ietf-tools/semver-action@v1
         with:
           token: ${{ github.token }}
           branch: ${{ github.ref_name }}
           fallbackTag: 'v0.0.0'
-      - name: echo tags2
+      - name: Show version
         run: |
           echo "The next tag version will be: ${{ steps.semver.outputs.next }}"
-
       - name: Setup Godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -67,19 +52,6 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Linux-ds" "$EXPORT_DIR/linux-server/$EXPORT_NAME-dedicated-server.x86_64"
-
-      # - name: Calculate semver version
-      #   id: calculate-version
-      #   uses: bitshifted/git-auto-semver@v1
-      #   with:
-      #     main_branch: master
-      #     # main_branch: ${{ github.ref_name }} # calculate against current branch
-      #     create_tag: true
-      #     # tag_prefix: 'tags'
-      # - name: Use version
-      #   run: |
-      #     echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
-
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
