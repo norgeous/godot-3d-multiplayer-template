@@ -19,18 +19,18 @@ jobs:
           lfs: true
           fetch-depth: '0'
 
-      - name: Minor version for each merge
-        id: taggerDryRun
-        uses: anothrNick/github-tag-action@1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          DRY_RUN: true
-      - name: echo tags
-        run: |
-          echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
-          echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
-          echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
+      # - name: Minor version for each merge
+      #   id: taggerDryRun
+      #   uses: anothrNick/github-tag-action@1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     WITH_V: true
+      #     DRY_RUN: true
+      # - name: echo tags
+      #   run: |
+      #     echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
+      #     echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
+      #     echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
 
 
       - name: Get Next Version
@@ -69,25 +69,25 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Linux-ds" "$EXPORT_DIR/linux-server/$EXPORT_NAME-dedicated-server.x86_64"
-      - name: Calculate semver version
-        id: calculate-version
-        uses: bitshifted/git-auto-semver@v1
-        with:
-          main_branch: master
-          # main_branch: ${{ github.ref_name }} # calculate against current branch
-          create_tag: true
-          # tag_prefix: 'tags'
-      - name: Use version
-        run: |
-          echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
-          # draft: true
-          prerelease: ${{ github.ref_name != 'master'}}
-          tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
-          body: ${{ github.sha }}
-          generateReleaseNotes: true
-          # bodyFile: "body.md"
+      # - name: Calculate semver version
+      #   id: calculate-version
+      #   uses: bitshifted/git-auto-semver@v1
+      #   with:
+      #     main_branch: master
+      #     # main_branch: ${{ github.ref_name }} # calculate against current branch
+      #     create_tag: true
+      #     # tag_prefix: 'tags'
+      # - name: Use version
+      #   run: |
+      #     echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
+      # - name: Create Release
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     allowUpdates: true
+      #     artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
+      #     # draft: true
+      #     prerelease: ${{ github.ref_name != 'master'}}
+      #     tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
+      #     body: ${{ github.sha }}
+      #     generateReleaseNotes: true
+      #     # bodyFile: "body.md"
