@@ -81,16 +81,27 @@ theme = ExtResource("4_idst6")
 text = "Host Game"
 flat = true
 
-[node name="JoinGame" type="Button" parent="Menu"]
-layout_mode = 2
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu"]
+layout_mode = 0
 offset_left = 59.0
 offset_top = 106.0
-offset_right = 312.0
+offset_right = 459.0
 offset_bottom = 157.0
+theme_override_constants/separation = 16
+
+[node name="JoinGame" type="Button" parent="Menu/HBoxContainer"]
+layout_mode = 2
 theme = ExtResource("4_idst6")
 text = "Join Game"
 flat = true
 
+[node name="ServerAddress" type="TextEdit" parent="Menu/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "127.0.0.1:8080"
+placeholder_text = "127.0.0.1:8080"
+
 [connection signal="pressed" from="Menu/Exit" to="." method="exit_game"]
 [connection signal="pressed" from="Menu/HostGame" to="." method="host_game"]
-[connection signal="pressed" from="Menu/JoinGame" to="." method="join_game"]
+[connection signal="pressed" from="Menu/HBoxContainer/JoinGame" to="." method="join_game"]
