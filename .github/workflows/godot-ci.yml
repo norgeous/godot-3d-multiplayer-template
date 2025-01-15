@@ -13,19 +13,19 @@ jobs:
     container:
       image: barichello/godot-ci:4.3
     steps:
-      - name: Checkout
+      - name: Git Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
           fetch-depth: '0'
-      - name: Determine next version number
+      - name: Determine Next Version
         id: semver
         uses: ietf-tools/semver-action@v1
         with:
           token: ${{ github.token }}
           branch: ${{ github.ref_name }}
           fallbackTag: 'v0.0.0'
-      - name: Show version
+      - name: Show Version
         run: |
           echo "The next tag version will be: ${{ steps.semver.outputs.next }}"
       - name: Setup Godot
