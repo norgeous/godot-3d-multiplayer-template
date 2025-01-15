@@ -96,7 +96,7 @@ text = "Join Game"
 flat = true
 
 [node name="ServerAddress" type="TextEdit" parent="Menu/HBoxContainer"]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "127.0.0.1:8080"
