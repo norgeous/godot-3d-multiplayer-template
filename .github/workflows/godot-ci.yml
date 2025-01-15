@@ -89,7 +89,7 @@ jobs:
           prerelease: ${{ github.ref_name != 'master'}}
           makeLatest: ${{ github.ref_name == 'master'}}
           # tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
-          name: ${{ steps.semver.outputs.next }}
+          tag: ${{ steps.semver.outputs.next }}
           body: ${{ github.sha }}
           generateReleaseNotes: true
           # bodyFile: "body.md"
