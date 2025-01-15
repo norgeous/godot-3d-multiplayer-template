@@ -32,18 +32,16 @@ jobs:
       #     echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
       #     echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
 
-
       - name: Get Next Version
         id: semver
         uses: ietf-tools/semver-action@v1
         with:
           token: ${{ github.token }}
           branch: ${{ github.ref_name }}
-          fallbackTag: '0.0.0'
+          fallbackTag: 'v0.0.0'
       - name: echo tags2
         run: |
           echo "The next tag version will be: ${{ steps.semver.outputs.next }}"
-
 
       - name: Setup Godot
         run: |
@@ -69,6 +67,7 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Linux-ds" "$EXPORT_DIR/linux-server/$EXPORT_NAME-dedicated-server.x86_64"
+
       # - name: Calculate semver version
       #   id: calculate-version
       #   uses: bitshifted/git-auto-semver@v1
@@ -80,14 +79,17 @@ jobs:
       # - name: Use version
       #   run: |
       #     echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
-      # - name: Create Release
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     allowUpdates: true
-      #     artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
-      #     # draft: true
-      #     prerelease: ${{ github.ref_name != 'master'}}
-      #     tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
-      #     body: ${{ github.sha }}
-      #     generateReleaseNotes: true
-      #     # bodyFile: "body.md"
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
+          # draft: true
+          prerelease: ${{ github.ref_name != 'master'}}
+          makeLatest: ${{ github.ref_name == 'master'}}
+          # tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
+          name: ${{ steps.semver.outputs.next }}
+          body: ${{ github.sha }}
+          generateReleaseNotes: true
+          # bodyFile: "body.md"
