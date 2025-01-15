@@ -63,6 +63,6 @@ jobs:
           prerelease: ${{ github.ref_name != 'master'}}
           makeLatest: ${{ github.ref_name == 'master'}}
           tag: "${{ steps.semver.outputs.next }}${{ github.ref_name != 'master' && '-' || '' }}${{ github.ref_name != 'master' && github.ref_name || '' }}"
-          body: "For: ${{ github.sha }}"
+          body: "For: ${{ github.sha }}\nnewline"
           generateReleaseNotes: true
           # bodyFile: "body.md"
