@@ -30,7 +30,7 @@ jobs:
           echo "The next tag version will be: ${{ steps.semver.outputs.next }}"
       - name: Insert version to Godot project file
         run: |
-          echo hi
+          sed -i 's/v0.0.0/${{ steps.semver.outputs.next }}/' project.godot
       - name: Setup Godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
