@@ -29,6 +29,7 @@ NetworkPerformance="*res://addons/netfox/network-performance.gd"
 
 [display]
 
+window/size/mode=3
 window/size/always_on_top=true
 
 [editor_plugins]
