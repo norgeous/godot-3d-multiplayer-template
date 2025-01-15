@@ -28,6 +28,9 @@ jobs:
       - name: Show Version
         run: |
           echo "The next tag version will be: ${{ steps.semver.outputs.next }}"
+      - name: Insert version to Godot project file
+        run: |
+          echo hi
       - name: Setup Godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
