@@ -32,6 +32,19 @@ jobs:
           echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
           echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
 
+
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ github.token }}
+          branch: ${{ github.ref_name }}
+          fallbackTag: '0.0.0'
+      - name: echo tags2
+        run: |
+          echo "The next tag version will be: ${{ steps.semver.outputs.next }}"
+
+
       - name: Setup Godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
