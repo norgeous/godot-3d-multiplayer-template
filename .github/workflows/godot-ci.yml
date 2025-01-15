@@ -13,36 +13,24 @@ jobs:
     container:
       image: barichello/godot-ci:4.3
     steps:
-      - name: Checkout
+      - name: Git Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
           fetch-depth: '0'
-
-      # - name: Minor version for each merge
-      #   id: taggerDryRun
-      #   uses: anothrNick/github-tag-action@1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     WITH_V: true
-      #     DRY_RUN: true
-      # - name: echo tags
-      #   run: |
-      #     echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
-      #     echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
-      #     echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
-
-      - name: Get Next Version
+      - name: Determine Next Version
         id: semver
         uses: ietf-tools/semver-action@v1
         with:
           token: ${{ github.token }}
           branch: ${{ github.ref_name }}
           fallbackTag: 'v0.0.0'
-      - name: echo tags2
+      - name: Show Version
         run: |
           echo "The next tag version will be: ${{ steps.semver.outputs.next }}"
-
+      - name: Insert version to Godot project file
+        run: |
+          sed -i 's/v0.0.0/${{ steps.semver.outputs.next }}${{ github.ref_name != 'master' && '-' }}${{ github.ref_name != 'master' && github.ref_name }}/' project.godot
       - name: Setup Godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -67,30 +55,14 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Linux-ds" "$EXPORT_DIR/linux-server/$EXPORT_NAME-dedicated-server.x86_64"
-
-      # - name: Calculate semver version
-      #   id: calculate-version
-      #   uses: bitshifted/git-auto-semver@v1
-      #   with:
-      #     main_branch: master
-      #     # main_branch: ${{ github.ref_name }} # calculate against current branch
-      #     create_tag: true
-      #     # tag_prefix: 'tags'
-      # - name: Use version
-      #   run: |
-      #     echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
-
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           artifacts: "build/windows/*,build/linux/*,build/linux-server/*"
-          # draft: true
-          # tag: "v${{ steps.calculate-version.outputs.version-string }}-${{ github.ref_name }}"
-          # tag: ${{ steps.semver.outputs.next }}
           prerelease: ${{ github.ref_name != 'master'}}
           makeLatest: ${{ github.ref_name == 'master'}}
-          tag: ${{ github.ref_name == 'master' && steps.semver.outputs.next || github.ref_name }}
+          tag: "${{ steps.semver.outputs.next }}${{ github.ref_name != 'master' && '-' }}${{ github.ref_name != 'master' && github.ref_name }}"
           body: "For: ${{ github.sha }}"
           generateReleaseNotes: true
           # bodyFile: "body.md"
